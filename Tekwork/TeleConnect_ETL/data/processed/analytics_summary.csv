@@ -1,0 +1,17 @@
+Metric,Value
+Overall Churn Rate (%),26.536987079369588
+Churn - Month-to-month (%),42.70967741935484
+Churn - One year (%),11.269517990495586
+Churn - Two year (%),2.831858407079646
+Churn - DSL (%),18.95910780669145
+Churn - Fiber optic (%),41.89276485788114
+Churn - No (%),7.404980340760157
+Churn - Tenure: 0-12 (%),47.438243366880144
+Churn - Tenure: 13-24 (%),28.7109375
+Churn - Tenure: 25-36 (%),21.634615384615387
+Churn - Tenure: 37-48 (%),19.028871391076116
+Churn - Tenure: 49-60 (%),14.423076923076922
+Churn - Tenure: 61-72 (%),6.609808102345416
+Churn - Charges High (%),35.36142897013676
+Churn - Charges Low (%),10.893371757925072
+Churn - Charges Medium (%),23.942028985507246
