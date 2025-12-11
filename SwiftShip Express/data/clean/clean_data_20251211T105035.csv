@@ -1,0 +1,11 @@
+shipment_id,source_city,destination_city,dispatch_time,expected_delivery_time,actual_delivery_time,package_weight,agent_id,city,traffic_congestion_score,avg_speed,weather_warnings,delay_minutes,is_delayed
+SHP001,Delhi,Kolkata,2025-12-11 03:20:31.271639,2025-12-11 13:20:31.271639,2025-12-11 14:20:31.271639,8.25,AG1000,Delhi,1,19,High Winds,60.0,True
+SHP002,Chennai,Kolkata,2025-12-10 22:20:31.271639,2025-12-11 10:20:31.271639,2025-12-11 11:20:31.271639,7.19,AG1001,Chennai,10,44,High Winds,60.0,True
+SHP003,Delhi,Ahmedabad,2025-12-10 20:20:31.271639,2025-12-11 08:20:31.271639,,6.42,AG1002,Delhi,1,19,High Winds,,False
+SHP004,Delhi,Ahmedabad,2025-12-11 03:20:31.271639,2025-12-11 12:20:31.271639,2025-12-11 14:20:31.271639,6.31,AG1003,Delhi,1,19,High Winds,120.0,True
+SHP005,Delhi,Kolkata,2025-12-11 02:20:31.271639,2025-12-11 14:20:31.271639,,1.37,AG1004,Delhi,1,19,High Winds,,False
+SHP006,Chennai,Bangalore,2025-12-11 04:20:31.271639,2025-12-11 16:20:31.271639,2025-12-11 18:20:31.271639,7.06,AG1005,Chennai,10,44,High Winds,120.0,True
+SHP007,Chennai,Pune,2025-12-11 02:20:31.271639,2025-12-11 09:20:31.271639,2025-12-11 10:20:31.271639,1.95,AG1006,Chennai,10,44,High Winds,60.0,True
+SHP008,Hyderabad,Ahmedabad,2025-12-11 02:20:31.271639,2025-12-11 11:20:31.271639,2025-12-11 15:20:31.271639,9.01,AG1007,Hyderabad,9,22,Storm,240.0,True
+SHP009,Hyderabad,Bangalore,2025-12-11 00:20:31.271639,2025-12-11 07:20:31.271639,2025-12-11 08:20:31.271639,8.85,AG1008,Hyderabad,9,22,Storm,60.0,True
+SHP010,Chennai,Ahmedabad,2025-12-10 20:20:31.271639,2025-12-11 03:20:31.271639,2025-12-11 01:20:31.271639,3.46,AG1009,Chennai,10,44,High Winds,-120.0,False

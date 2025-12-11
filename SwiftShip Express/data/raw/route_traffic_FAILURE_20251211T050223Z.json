@@ -1,0 +1,6 @@
+{
+  "timestamp": "2025-12-11T05:02:23.869557+00:00",
+  "url": "https://api.swiftshipexpress.in/v1/traffic/routes",
+  "attempts": 3,
+  "error": "HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000002A45268B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)\"))"
+}

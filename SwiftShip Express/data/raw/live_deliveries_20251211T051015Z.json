@@ -1,0 +1,102 @@
+[
+  {
+    "shipment_id": "SHP001",
+    "source_city": "Chennai",
+    "destination_city": "Pune",
+    "dispatch_time": "2025-12-10T19:10:15.278026",
+    "expected_delivery_time": "2025-12-11T01:10:15.278026",
+    "actual_delivery_time": null,
+    "package_weight": 4.96,
+    "agent_id": "AG1000"
+  },
+  {
+    "shipment_id": "SHP002",
+    "source_city": "Chennai",
+    "destination_city": "Ahmedabad",
+    "dispatch_time": "2025-12-11T03:10:15.278026",
+    "expected_delivery_time": "2025-12-11T12:10:15.278026",
+    "actual_delivery_time": "2025-12-11T13:10:15.278026",
+    "package_weight": 3.27,
+    "agent_id": "AG1001"
+  },
+  {
+    "shipment_id": "SHP003",
+    "source_city": "Hyderabad",
+    "destination_city": "Ahmedabad",
+    "dispatch_time": "2025-12-10T19:10:15.278026",
+    "expected_delivery_time": "2025-12-11T07:10:15.278026",
+    "actual_delivery_time": "2025-12-11T06:10:15.278026",
+    "package_weight": 2.67,
+    "agent_id": "AG1002"
+  },
+  {
+    "shipment_id": "SHP004",
+    "source_city": "Chennai",
+    "destination_city": "Ahmedabad",
+    "dispatch_time": "2025-12-11T03:10:15.278026",
+    "expected_delivery_time": "2025-12-11T11:10:15.278026",
+    "actual_delivery_time": "2025-12-11T09:10:15.278026",
+    "package_weight": 4.91,
+    "agent_id": "AG1003"
+  },
+  {
+    "shipment_id": "SHP005",
+    "source_city": "Delhi",
+    "destination_city": "Bangalore",
+    "dispatch_time": "2025-12-10T19:10:15.278026",
+    "expected_delivery_time": "2025-12-11T04:10:15.278026",
+    "actual_delivery_time": "2025-12-11T04:10:15.278026",
+    "package_weight": 2.87,
+    "agent_id": "AG1004"
+  },
+  {
+    "shipment_id": "SHP006",
+    "source_city": "Chennai",
+    "destination_city": "Kolkata",
+    "dispatch_time": "2025-12-11T01:10:15.278026",
+    "expected_delivery_time": "2025-12-11T10:10:15.278026",
+    "actual_delivery_time": "2025-12-11T13:10:15.278026",
+    "package_weight": 5.01,
+    "agent_id": "AG1005"
+  },
+  {
+    "shipment_id": "SHP007",
+    "source_city": "Hyderabad",
+    "destination_city": "Bangalore",
+    "dispatch_time": "2025-12-10T19:10:15.278026",
+    "expected_delivery_time": "2025-12-11T02:10:15.278026",
+    "actual_delivery_time": "2025-12-11T02:10:15.278026",
+    "package_weight": 3.14,
+    "agent_id": "AG1006"
+  },
+  {
+    "shipment_id": "SHP008",
+    "source_city": "Delhi",
+    "destination_city": "Bangalore",
+    "dispatch_time": "2025-12-10T20:10:15.278026",
+    "expected_delivery_time": "2025-12-11T05:10:15.278026",
+    "actual_delivery_time": null,
+    "package_weight": 6.8,
+    "agent_id": "AG1007"
+  },
+  {
+    "shipment_id": "SHP009",
+    "source_city": "Hyderabad",
+    "destination_city": "Bangalore",
+    "dispatch_time": "2025-12-10T22:10:15.278026",
+    "expected_delivery_time": "2025-12-11T08:10:15.278026",
+    "actual_delivery_time": null,
+    "package_weight": 1.62,
+    "agent_id": "AG1008"
+  },
+  {
+    "shipment_id": "SHP010",
+    "source_city": "Chennai",
+    "destination_city": "Ahmedabad",
+    "dispatch_time": "2025-12-10T19:10:15.278026",
+    "expected_delivery_time": "2025-12-11T04:10:15.278026",
+    "actual_delivery_time": "2025-12-11T03:10:15.278026",
+    "package_weight": 1.24,
+    "agent_id": "AG1009"
+  }
+]

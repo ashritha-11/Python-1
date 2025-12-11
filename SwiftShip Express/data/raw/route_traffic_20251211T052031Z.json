@@ -1,0 +1,38 @@
+[
+  {
+    "city": "Hyderabad",
+    "traffic_congestion_score": 9,
+    "avg_speed": 22,
+    "weather_warnings": "Storm"
+  },
+  {
+    "city": "Delhi",
+    "traffic_congestion_score": 1,
+    "avg_speed": 19,
+    "weather_warnings": "High Winds"
+  },
+  {
+    "city": "Mumbai",
+    "traffic_congestion_score": 3,
+    "avg_speed": 30,
+    "weather_warnings": "Storm"
+  },
+  {
+    "city": "Chennai",
+    "traffic_congestion_score": 10,
+    "avg_speed": 44,
+    "weather_warnings": "High Winds"
+  },
+  {
+    "city": "Pune",
+    "traffic_congestion_score": 3,
+    "avg_speed": 19,
+    "weather_warnings": "Rain"
+  },
+  {
+    "city": "Bangalore",
+    "traffic_congestion_score": 6,
+    "avg_speed": 37,
+    "weather_warnings": "None"
+  }
+]

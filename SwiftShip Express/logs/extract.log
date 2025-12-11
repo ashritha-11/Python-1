@@ -1,0 +1,332 @@
+2025-12-11 10:32:17,615 - INFO - Starting Extract stage for SwiftShip Express
+2025-12-11 10:32:17,615 - INFO - [live_deliveries] Attempt 1 - GET https://api.swiftshipexpress.in/v1/deliveries/live
+2025-12-11 10:32:17,751 - ERROR - [live_deliveries] Attempt 1 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A4526889B0>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:32:17,751 - INFO - [live_deliveries] Retrying after 1.0 seconds...
+2025-12-11 10:32:18,752 - INFO - [live_deliveries] Attempt 2 - GET https://api.swiftshipexpress.in/v1/deliveries/live
+2025-12-11 10:32:18,757 - ERROR - [live_deliveries] Attempt 2 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A452688FB0>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:32:18,757 - INFO - [live_deliveries] Retrying after 2.0 seconds...
+2025-12-11 10:32:20,759 - INFO - [live_deliveries] Attempt 3 - GET https://api.swiftshipexpress.in/v1/deliveries/live
+2025-12-11 10:32:20,760 - ERROR - [live_deliveries] Attempt 3 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A4526886E0>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:32:20,761 - ERROR - [live_deliveries] All 3 attempts failed. Logging failure.
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 205, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: <urllib3.connection.HTTPSConnection object at 0x000002A4526886E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A4526886E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\OneDrive\Desktop\Tekwork\SwiftShip Express\extract.py", line 104, in fetch_with_retries
+    resp = session.get(url, params=params, headers=headers, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A4526886E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:32:20,840 - INFO - Saved raw response to data\raw\live_deliveries_FAILURE_20251211T050220Z.json
+2025-12-11 10:32:20,840 - ERROR - Failed to fetch Live Delivery API: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A4526886E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:32:20,842 - INFO - [route_traffic] Attempt 1 - GET https://api.swiftshipexpress.in/v1/traffic/routes
+2025-12-11 10:32:20,843 - ERROR - [route_traffic] Attempt 1 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A45268A420>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:32:20,843 - INFO - [route_traffic] Retrying after 1.0 seconds...
+2025-12-11 10:32:21,844 - INFO - [route_traffic] Attempt 2 - GET https://api.swiftshipexpress.in/v1/traffic/routes
+2025-12-11 10:32:21,845 - ERROR - [route_traffic] Attempt 2 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A45268AB10>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:32:21,847 - INFO - [route_traffic] Retrying after 2.0 seconds...
+2025-12-11 10:32:23,847 - INFO - [route_traffic] Attempt 3 - GET https://api.swiftshipexpress.in/v1/traffic/routes
+2025-12-11 10:32:23,864 - ERROR - [route_traffic] Attempt 3 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A45268B230>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:32:23,865 - ERROR - [route_traffic] All 3 attempts failed. Logging failure.
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 205, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: <urllib3.connection.HTTPSConnection object at 0x000002A45268B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A45268B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\OneDrive\Desktop\Tekwork\SwiftShip Express\extract.py", line 104, in fetch_with_retries
+    resp = session.get(url, params=params, headers=headers, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A45268B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:32:23,873 - INFO - Saved raw response to data\raw\route_traffic_FAILURE_20251211T050223Z.json
+2025-12-11 10:32:23,876 - ERROR - Failed to fetch Route Traffic API: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A45268B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:32:23,878 - INFO - Extract stage finished. Keys fetched: []
+2025-12-11 10:33:24,342 - INFO - Starting Extract stage for SwiftShip Express
+2025-12-11 10:33:24,342 - INFO - [live_deliveries] Attempt 1 - GET https://api.swiftshipexpress.in/v1/deliveries/live
+2025-12-11 10:33:24,371 - ERROR - [live_deliveries] Attempt 1 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B789B0>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:33:24,372 - INFO - [live_deliveries] Retrying after 1.0 seconds...
+2025-12-11 10:33:25,373 - INFO - [live_deliveries] Attempt 2 - GET https://api.swiftshipexpress.in/v1/deliveries/live
+2025-12-11 10:33:25,378 - ERROR - [live_deliveries] Attempt 2 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B78FB0>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:33:25,379 - INFO - [live_deliveries] Retrying after 2.0 seconds...
+2025-12-11 10:33:27,380 - INFO - [live_deliveries] Attempt 3 - GET https://api.swiftshipexpress.in/v1/deliveries/live
+2025-12-11 10:33:27,382 - ERROR - [live_deliveries] Attempt 3 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B786E0>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:33:27,382 - ERROR - [live_deliveries] All 3 attempts failed. Logging failure.
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 205, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: <urllib3.connection.HTTPSConnection object at 0x00000146D2B786E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B786E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\OneDrive\Desktop\Tekwork\SwiftShip Express\extract.py", line 104, in fetch_with_retries
+    resp = session.get(url, params=params, headers=headers, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B786E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:33:27,389 - INFO - Saved raw response to data\raw\live_deliveries_FAILURE_20251211T050327Z.json
+2025-12-11 10:33:27,390 - ERROR - Failed to fetch Live Delivery API: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/deliveries/live (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B786E0>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:33:27,391 - INFO - [route_traffic] Attempt 1 - GET https://api.swiftshipexpress.in/v1/traffic/routes
+2025-12-11 10:33:27,396 - ERROR - [route_traffic] Attempt 1 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B7A420>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:33:27,398 - INFO - [route_traffic] Retrying after 1.0 seconds...
+2025-12-11 10:33:28,399 - INFO - [route_traffic] Attempt 2 - GET https://api.swiftshipexpress.in/v1/traffic/routes
+2025-12-11 10:33:28,401 - ERROR - [route_traffic] Attempt 2 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B7AB10>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:33:28,402 - INFO - [route_traffic] Retrying after 2.0 seconds...
+2025-12-11 10:33:30,403 - INFO - [route_traffic] Attempt 3 - GET https://api.swiftshipexpress.in/v1/traffic/routes
+2025-12-11 10:33:30,426 - ERROR - [route_traffic] Attempt 3 failed: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'api.swiftshipexpress.in\', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B7B230>: Failed to resolve \'api.swiftshipexpress.in\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-12-11 10:33:30,427 - ERROR - [route_traffic] All 3 attempts failed. Logging failure.
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connection.py", line 205, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: <urllib3.connection.HTTPSConnection object at 0x00000146D2B7B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B7B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ashri\OneDrive\Desktop\Tekwork\SwiftShip Express\extract.py", line 104, in fetch_with_retries
+    resp = session.get(url, params=params, headers=headers, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ashri\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B7B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:33:30,431 - INFO - Saved raw response to data\raw\route_traffic_FAILURE_20251211T050330Z.json
+2025-12-11 10:33:30,434 - ERROR - Failed to fetch Route Traffic API: HTTPSConnectionPool(host='api.swiftshipexpress.in', port=443): Max retries exceeded with url: /v1/traffic/routes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x00000146D2B7B230>: Failed to resolve 'api.swiftshipexpress.in' ([Errno 11001] getaddrinfo failed)"))
+2025-12-11 10:33:30,434 - INFO - Extract stage finished. Keys fetched: []
+2025-12-11 10:36:08,588 - ERROR - Mock file missing: data\mock\live_deliveries.json
+2025-12-11 10:36:08,588 - ERROR - Mock file missing: data\mock\route_traffic.json
+2025-12-11 10:46:15,439 - ERROR - Mock file missing: data\mock\live_deliveries.json
+2025-12-11 10:46:15,440 - ERROR - Mock file missing: data\mock\route_traffic.json
+2025-12-11 10:50:25,045 - ERROR - Mock file missing: data\mock\live_deliveries.json
+2025-12-11 10:50:25,046 - ERROR - Mock file missing: data\mock\route_traffic.json
+2025-12-11 10:51:33,767 - ERROR - Mock file missing: data\mock\live_deliveries.json
+2025-12-11 10:51:33,769 - ERROR - Mock file missing: data\mock\route_traffic.json

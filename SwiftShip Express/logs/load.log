@@ -1,0 +1,10 @@
+2025-12-11 10:50:43,319 - INFO - Starting Load stage...
+2025-12-11 10:50:43,321 - INFO - Loaded clean dataset: data\clean\clean_data_20251211T105035.csv
+2025-12-11 10:50:44,911 - WARNING - Could not auto-create table. Run SQL manually. Error: {'message': 'Could not find the function public.execute_sql(query) in the schema cache', 'code': 'PGRST202', 'hint': None, 'details': 'Searched for the function public.execute_sql with parameter query or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.'}
+2025-12-11 10:50:44,941 - ERROR - Batch insert failed: Out of range float values are not JSON compliant: nan
+2025-12-11 10:50:47,943 - INFO - Load complete.
+2025-12-11 10:51:33,805 - INFO - Starting Load stage...
+2025-12-11 10:51:33,807 - INFO - Loaded clean dataset: data\clean\clean_data_20251211T105133.csv
+2025-12-11 10:51:34,819 - WARNING - Could not auto-create table. Run SQL manually. Error: {'message': 'Could not find the function public.execute_sql(query) in the schema cache', 'code': 'PGRST202', 'hint': None, 'details': 'Searched for the function public.execute_sql with parameter query or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.'}
+2025-12-11 10:51:34,823 - ERROR - Batch insert failed: Out of range float values are not JSON compliant: nan
+2025-12-11 10:51:37,825 - INFO - Load complete.
