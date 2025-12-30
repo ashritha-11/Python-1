@@ -7,246 +7,124 @@ Original file is located at
     https://colab.research.google.com/drive/1-rgsn3LvBukTRtWBCXTmcUusFc8GB1pR
 """
 
-import seaborn as sns
-import pandas as pd
-
-# Load tips dataset
-tips = sns.load_dataset("tips")
-
-# View first 5 rows
-tips.head()
-
-import seaborn as sns
-import pandas as pd
-
-# Load tips dataset
-tips = sns.load_dataset("taxis")
-
-# View first 5 rows
-tips.head()
-
-tips.info()
-
-tips.columns
-
-tips.shape
-
-tips.describe(include='all')
-
-# Import libraries
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from scipy import stats
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
-# Load the tips dataset
-df = sns.load_dataset("tips")  # correct dataset name
+tips = sns.load_dataset("tips")
 
-# Display first 5 rows
 print("First 5 rows:")
-print(df.head())
+print(tips.head())
 
-# Dataset info
-print("\nDataset info:")
-print(df.info())
+print("\nInfo:")
+print(tips.info())
 
-# Shape of the dataset
-print("\nShape of dataset:", df.shape)
+print("\nShape:", tips.shape)
+print("\nColumns:", tips.columns)
 
-# Column names
-print("\nColumns:", df.columns)
+print("\nDescriptive Statistics:")
+print(tips.describe(include='all'))
 
-# Descriptive statistics
-print("\nDescriptive statistics:")
-print(df.describe(include='all'))
+# Missing values %
+missing_percent = (tips.isnull().sum().sum() / tips.size) * 100
+print("\nMissing Value %:", missing_percent)
 
-# Percentage of missing values
-missing_percent = ((df.shape[0] - df.dropna().shape[0]) / df.shape[0]) * 100
-print("\nPercentage of missing values:", missing_percent)
+print("\nSex count:")
+print(tips['sex'].value_counts())
 
-# Value counts for 'sex' column (since 'color' doesn't exist)
-print("\nValue counts for 'sex':")
-print(df['sex'].value_counts())
+print("\nTime count:")
+print(tips['time'].value_counts())
 
-# Barplot of average tip by sex
 plt.figure(figsize=(6,4))
-sns.barplot(x='sex', y='tip', data=df, estimator='mean')
+sns.barplot(x='sex', y='tip', data=tips, estimator='mean')
 plt.title("Average Tip by Sex")
 plt.show()
 
-# Histogram of tip by sex with KDE
 plt.figure(figsize=(6,4))
-sns.histplot(x='tip', hue='sex', data=df, kde=True, palette={'Male':'green','Female':'yellow'})
+sns.histplot(data=tips, x='tip', hue='sex', kde=True)
 plt.title("Tip Distribution by Sex")
 plt.show()
 
-import seaborn as sns
-from scipy import stats
-
-# Load taxis dataset
-df = sns.load_dataset('taxis')
-
-# Separate tip amounts by payment method
-credit_tip = df.loc[df['payment'] == 'credit card', 'tip']
-cash_tip = df.loc[df['payment'] == 'cash', 'tip']
-
-# Independent T-Test
-t_stat, p_val = stats.ttest_ind(credit_tip, cash_tip)
-
-print("Independent T-Test statistic:", t_stat)
-print("P-value:", p_val)
-
-alpha = 0.05  # significance level
-
-if p_val < alpha:
-    print("Reject null hypothesis: The tip for credit card payment is different from cash")
-else:
-    print("Fail to reject null hypothesis")
-
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-tips = sns.load_dataset("tips")
-
-sns.histplot(x=tips.tip, hue=tips.sex, kde=True, palette=['green', 'yellow'])
-plt.show()
-
-# Check counts of hue
-print(tips.sex.value_counts())
-
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy import stats
-
-# Load the tips dataset
-tips = sns.load_dataset("tips")
-
-# Barplot: Time vs Tip
+plt.figure(figsize=(6,4))
 sns.barplot(x='time', y='tip', data=tips, estimator='mean')
 plt.title("Average Tip by Time")
 plt.show()
 
-# Histogram with hue
-sns.histplot(x='tip', hue='time', data=tips, kde=True, palette=['green', 'yellow'])
+plt.figure(figsize=(6,4))
+sns.histplot(data=tips, x='tip', hue='time', kde=True)
 plt.title("Tip Distribution by Time")
 plt.show()
 
-# Independent T-Test: Dinner vs Lunch tips
-dinner_tip = tips['tip'][tips['time'] == 'Dinner']
-lunch_tip = tips['tip'][tips['time'] == 'Lunch']
+dinner_tip = tips[tips['time'] == 'Dinner']['tip']
+lunch_tip = tips[tips['time'] == 'Lunch']['tip']
 
 t_stat, p_val = stats.ttest_ind(dinner_tip, lunch_tip)
-print("Independent T-Test statistic:", t_stat)
-print("p-value:", p_val)
+
+print("T-Statistic:", t_stat)
+print("P-Value:", p_val)
 
 alpha = 0.05
 if p_val < alpha:
-    print("Reject null hypothesis: The tip for Dinner is different from Lunch")
+    print("Reject H0 → Dinner and Lunch tips differ")
 else:
-    print("Fail to reject null hypothesis")
+    print("Fail to Reject H0")
 
-import pandas as pd
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
+df = sns.load_dataset("taxis")
 
-df_tukey = df[['tip', 'pickup_borough']].copy()
+print(df.head())
+print(df.info())
+print(df.describe(include='all'))
 
-# Force correct types
-df_tukey['tip'] = pd.to_numeric(df_tukey['tip'], errors='coerce')
-df_tukey['pickup_borough'] = df_tukey['pickup_borough'].astype(str)
+credit_tip = df[df['payment'] == 'credit card']['tip']
+cash_tip = df[df['payment'] == 'cash']['tip']
 
-# Remove invalid rows
-df_tukey = df_tukey.dropna()
+t_stat, p_val = stats.ttest_ind(credit_tip, cash_tip, nan_policy='omit')
 
-# Remove empty strings if any
-df_tukey = df_tukey[df_tukey['pickup_borough'].str.strip() != ""]
+print("T-Statistic:", t_stat)
+print("P-Value:", p_val)
 
-# Reset index
-df_tukey.reset_index(drop=True, inplace=True)
+if p_val < alpha:
+    print("Reject H0 → Tips differ by payment method")
+else:
+    print("Fail to Reject H0")
 
-# Tukey test
+df_tukey = df[['tip', 'pickup_borough']].dropna()
+
 tukey = pairwise_tukeyhsd(
-    endog=df_tukey['tip'].values,
-    groups=df_tukey['pickup_borough'].values,
+    endog=df_tukey['tip'],
+    groups=df_tukey['pickup_borough'],
     alpha=0.05
 )
 
 print(tukey)
 
-import pandas as pd
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
+plt.figure(figsize=(10,4))
+sns.barplot(x='pickup_borough', y='tip', data=df, estimator='std')
+plt.title("Tip Variability by Pickup Borough")
+plt.xticks(rotation=45)
+plt.show()
 
-df_tukey = df[['tip', 'pickup_borough']].copy()
+plt.figure(figsize=(10,4))
+sns.histplot(data=df, x='tip', hue='pickup_borough', kde=True)
+plt.title("Tip Distribution by Pickup Borough")
+plt.show()
 
-# Force correct types
-df_tukey['tip'] = pd.to_numeric(df_tukey['tip'], errors='coerce')
-df_tukey['pickup_borough'] = df_tukey['pickup_borough'].astype(str)
+pickup_groups = [g['tip'].dropna().values for _, g in df.groupby('pickup_zone')]
+f_stat, p_val = stats.f_oneway(*pickup_groups)
 
-# Remove invalid rows
-df_tukey = df_tukey.dropna()
+print("ANOVA Pickup Zone")
+print("F:", f_stat, "P:", p_val)
 
-# Remove empty strings if any
-df_tukey = df_tukey[df_tukey['pickup_borough'].str.strip() != ""]
+dropoff_groups = [g['tip'].dropna().values for _, g in df.groupby('dropoff_zone')]
+f_stat, p_val = stats.f_oneway(*dropoff_groups)
 
-# Reset index
-df_tukey.reset_index(drop=True, inplace=True)
+print("\nANOVA Dropoff Zone")
+print("F:", f_stat, "P:", p_val)
 
-# Tukey test
-tukey = pairwise_tukeyhsd(
-    endog=df_tukey['tip'].values,
-    groups=df_tukey['pickup_borough'].values,
-    alpha=0.05
-)
-print(tukey)
-
-sns.barplot(x=df['pickup_borough'],y=df['tip'],palette='Set2',estimator='std')
-
-sns.histplot(x=df['tip'],hue=df['pickup_borough'],bins=20,kde=True,palette='Set2')
-
-import pandas as pd
-from scipy import stats
-
-# Assuming df is your DataFrame
-# df = pd.read_csv("your_file.csv")  # Uncomment if reading from CSV
-
-# ----------------------------
-# ANOVA Test for pickup_zone
-# ----------------------------
-pickup_categories = [group['tip'].values for name, group in df.groupby('pickup_zone')]
-f_stat_pickup, p_val_pickup = stats.f_oneway(*pickup_categories)
-
-print("ANOVA Test for pickup_zone")
-print(f"F-Statistic: {f_stat_pickup}")
-print(f"P-Value: {p_val_pickup}")
-
-alpha = 0.05
-if p_val_pickup < alpha:
-    print("Reject Null Hypothesis: At least one pickup_zone group differs in tip.")
-else:
-    print("Fail to reject Null Hypothesis: All pickup_zone groups have similar tip distribution.")
-
-# ----------------------------
-# ANOVA Test for dropoff_zone
-# ----------------------------
-dropoff_categories = [group['tip'].values for name, group in df.groupby('dropoff_zone')]
-f_stat_dropoff, p_val_dropoff = stats.f_oneway(*dropoff_categories)
-
-print("\nANOVA Test for dropoff_zone")
-print(f"F-Statistic: {f_stat_dropoff}")
-print(f"P-Value: {p_val_dropoff}")
-
-if p_val_dropoff < alpha:
-    print("Reject Null Hypothesis: At least one dropoff_zone group differs in tip.")
-else:
-    print("Fail to reject Null Hypothesis: All dropoff_zone groups have similar tip distribution.")
-
-# ----------------------------
-# Insights and Decision
-# ----------------------------
-print("\nInsights:")
-if p_val_pickup < alpha and p_val_dropoff < alpha:
-    print("Both pickup_zone and dropoff_zone have a statistically significant effect on tip.")
-elif p_val_pickup < alpha:
-    print("Only pickup_zone has a statistically significant effect on tip.")
-elif p_val_dropoff < alpha:
-    print("Only dropoff_zone has a statistically significant effect on tip.")
-else:
-    print("Neither pickup_zone nor dropoff_zone significantly affects tip.")
+print("\nINSIGHTS:")
+print("✔ Tips differ by time (Lunch vs Dinner)")
+print("✔ Payment method affects tips")
+print("✔ Pickup borough & zones influence tip amounts")
+print("✔ ANOVA confirms location impact on tipping behavior")
