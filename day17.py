@@ -7,124 +7,190 @@ Original file is located at
     https://colab.research.google.com/drive/1-rgsn3LvBukTRtWBCXTmcUusFc8GB1pR
 """
 
-import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
+import pandas as pd
+df = sns.load_dataset('taxis')
+print(df.head())
+print(df.shape)
+df.describe()
+df.describe(include='object')
+
+print(df.isna().sum())
+print((df.isna().sum() / df.shape[0]) * 100)
+
+df = df.dropna()
+df = df.reset_index(drop=True)
+print(df.shape)
+
+print(df['color'].value_counts())
+yellow_tip = df['tip'][df['color'] == 'yellow']
+green_tip = df['tip'][df['color'] == 'green']
+print("Green tip shape:", green_tip.shape)
+print("Yellow tip shape:", yellow_tip.shape)
+
 from scipy import stats
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
+t_stat, p_val = stats.ttest_ind(yellow_tip, green_tip)
 
-tips = sns.load_dataset("tips")
-
-print("First 5 rows:")
-print(tips.head())
-
-print("\nInfo:")
-print(tips.info())
-
-print("\nShape:", tips.shape)
-print("\nColumns:", tips.columns)
-
-print("\nDescriptive Statistics:")
-print(tips.describe(include='all'))
-
-# Missing values %
-missing_percent = (tips.isnull().sum().sum() / tips.size) * 100
-print("\nMissing Value %:", missing_percent)
-
-print("\nSex count:")
-print(tips['sex'].value_counts())
-
-print("\nTime count:")
-print(tips['time'].value_counts())
-
-plt.figure(figsize=(6,4))
-sns.barplot(x='sex', y='tip', data=tips, estimator='mean')
-plt.title("Average Tip by Sex")
-plt.show()
-
-plt.figure(figsize=(6,4))
-sns.histplot(data=tips, x='tip', hue='sex', kde=True)
-plt.title("Tip Distribution by Sex")
-plt.show()
-
-plt.figure(figsize=(6,4))
-sns.barplot(x='time', y='tip', data=tips, estimator='mean')
-plt.title("Average Tip by Time")
-plt.show()
-
-plt.figure(figsize=(6,4))
-sns.histplot(data=tips, x='tip', hue='time', kde=True)
-plt.title("Tip Distribution by Time")
-plt.show()
-
-dinner_tip = tips[tips['time'] == 'Dinner']['tip']
-lunch_tip = tips[tips['time'] == 'Lunch']['tip']
-
-t_stat, p_val = stats.ttest_ind(dinner_tip, lunch_tip)
-
-print("T-Statistic:", t_stat)
-print("P-Value:", p_val)
-
+print("P-value:", p_val)
 alpha = 0.05
 if p_val < alpha:
-    print("Reject H0 → Dinner and Lunch tips differ")
+    print("Reject null hypothesis: The tip for yellow category is different than others.")
 else:
-    print("Fail to Reject H0")
+    print("Fail to reject null hypothesis: No significant difference found.")
 
-df = sns.load_dataset("taxis")
+import seaborn as sns
+import pandas as pd
+from scipy import stats
+df = sns.load_dataset('taxis')
+missing_pct = ((df.shape[0] - df.dropna().shape[0]) / df.shape[0]) * 100
+print(f"Percentage of missing data: {missing_pct}%")
+df = df.dropna()
+df = df.reset_index(drop=True)
+print(f"New shape after cleaning: {df.shape}")
+print(df['color'].value_counts())
+sns.countplot(x=df['pickup_borough'], palette='Set1')
+print(df['tip'].groupby(df['pickup_borough']).std())
 
-print(df.head())
-print(df.info())
-print(df.describe(include='all'))
+# 3. INDEPENDENT T-TEST (Yellow vs Green Taxis)
 
-credit_tip = df[df['payment'] == 'credit card']['tip']
-cash_tip = df[df['payment'] == 'cash']['tip']
+yellow_tip = df['tip'][df['color'] == 'yellow']
+green_tip = df['tip'][df['color'] == 'green']
 
-t_stat, p_val = stats.ttest_ind(credit_tip, cash_tip, nan_policy='omit')
+print(f"Green samples: {green_tip.shape}") # (968,)
+print(f"Yellow samples: {yellow_tip.shape}") # (5373,)
 
-print("T-Statistic:", t_stat)
-print("P-Value:", p_val)
+t_stat, p_val_ttest = stats.ttest_ind(yellow_tip, green_tip)
+print(f"T-Test P-value: {p_val_ttest}")
 
-if p_val < alpha:
-    print("Reject H0 → Tips differ by payment method")
+alpha = 0.05
+if p_val_ttest < alpha:
+    print("Reject null hypothesis: The tip for yellow category is different than others.")
 else:
-    print("Fail to Reject H0")
+    print("Fail to reject null hypothesis")
 
-df_tukey = df[['tip', 'pickup_borough']].dropna()
+# 4. ANOVA TEST (Comparing Multiple Boroughs)
+manhattan_tip = df['tip'][df['pickup_borough'] == 'Manhattan']
+queens_tip = df['tip'][df['pickup_borough'] == 'Queens']
+bronx_tip = df['tip'][df['pickup_borough'] == 'Bronx']
+brooklyn_tip = df['tip'][df['pickup_borough'] == 'Brooklyn']
 
-tukey = pairwise_tukeyhsd(
-    endog=df_tukey['tip'],
-    groups=df_tukey['pickup_borough'],
-    alpha=0.05
-)
+# Perform One-way ANOVA
+categories = [group['tip'].values for name, group in df.groupby('pickup_borough')]
+f_stat, p_val_anova = stats.f_oneway(*categories)
 
-print(tukey)
+print(f"ANOVA P-value: {p_val_anova}")
+if p_val_anova < alpha:
+    print("Reject null hypothesis: Significant difference in tips between boroughs.")
 
-plt.figure(figsize=(10,4))
-sns.barplot(x='pickup_borough', y='tip', data=df, estimator='std')
-plt.title("Tip Variability by Pickup Borough")
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+from scipy import stats
+
+# 1. LOAD DATA
+df = sns.load_dataset('taxis')
+df_raw = df.copy()
+
+# 2. DATA CLEANING
+df = df.dropna().reset_index(drop=True)
+sns.set_theme(style="whitegrid")
+
+# PLOT 1: Missing Values (Pre-cleaning)
+plt.figure(figsize=(10, 5))
+sns.barplot(x=df_raw.isna().sum().index, y=df_raw.isna().sum().values, palette="Reds_r")
+plt.title("Missing Values Count per Column")
+plt.xticks(rotation=45)
+plt.ylabel("Count")
+plt.show()
+
+# PLOT 2: Distribution of Taxi Colors (Categorical Analysis)
+# Based on df.color.value_counts()
+plt.figure(figsize=(7, 5))
+sns.countplot(data=df, x='color', palette=['yellow', 'green'], edgecolor='black')
+plt.title("Sample Size Comparison: Yellow vs Green Taxis")
+plt.show()
+
+# PLOT 3: Tip Distribution (KDE Plot)
+# This provides the visual logic for your Independent T-Test
+
+plt.figure(figsize=(10, 6))
+sns.kdeplot(data=df, x='tip', hue='color', fill=True, palette=['gold', 'seagreen'], common_norm=False)
+plt.title("KDE Plot: Tip Amount Distribution by Taxi Color")
+plt.xlim(0, 10)
+plt.show()
+
+# --- STATISTICAL TEST RESULTS ---
+yellow_tip = df[df['color'] == 'yellow']['tip']
+green_tip = df[df['color'] == 'green']['tip']
+t_stat, p_val = stats.ttest_ind(yellow_tip, green_tip)
+
+print(f"T-Test Result: P-value = {p_val}")
+if p_val < 0.05:
+    print("Result: Statistically Significant Difference found.")
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+from scipy import stats
+
+# 1. LOAD DATA
+df_raw = sns.load_dataset('taxis')
+df = df_raw.copy()
+
+# 2. DATA CLEANING (Based on your screenshots)
+# Check nulls and drop them
+df = df.dropna().reset_index(drop=True)
+
+
+# ---------------------------------------------------------
+
+# PLOT 1: MISSING VALUES (Using the raw data)
+plt.figure(figsize=(10, 5))
+sns.barplot(x=df_raw.isna().sum().index, y=df_raw.isna().sum().values, palette="Reds_r")
+plt.title("Missing Values Count per Column")
 plt.xticks(rotation=45)
 plt.show()
 
-plt.figure(figsize=(10,4))
-sns.histplot(data=df, x='tip', hue='pickup_borough', kde=True)
-plt.title("Tip Distribution by Pickup Borough")
+# PLOT 2: COUNT PLOT (Taxi Colors)
+plt.figure(figsize=(7, 5))
+sns.countplot(data=df, x='color', palette=['yellow', 'green'], edgecolor='black')
+plt.title("Frequency of Yellow vs Green Taxis")
 plt.show()
 
-pickup_groups = [g['tip'].dropna().values for _, g in df.groupby('pickup_zone')]
-f_stat, p_val = stats.f_oneway(*pickup_groups)
+# PLOT 3: KDE PLOT (Visualizing the T-Test)
+plt.figure(figsize=(10, 6))
+sns.kdeplot(data=df, x='tip', hue='color', fill=True, palette=['gold', 'seagreen'], common_norm=False)
+plt.title("Tip Distribution: Yellow vs Green")
+plt.xlim(0, 10) # Focused view
+plt.show()
 
-print("ANOVA Pickup Zone")
-print("F:", f_stat, "P:", p_val)
+# PLOT 5: SCATTER PLOT (Distance vs Tip)
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=df, x='distance', y='tip', hue='color', alpha=0.5, palette=['gold', 'seagreen'])
+plt.title("Relationship: Trip Distance vs Tip Amount")
+plt.show()
 
-dropoff_groups = [g['tip'].dropna().values for _, g in df.groupby('dropoff_zone')]
-f_stat, p_val = stats.f_oneway(*dropoff_groups)
+# PLOT 6: HEATMAP (Correlation Matrix)
+plt.figure(figsize=(12, 8))
+# Select only numerical columns for correlation calculation
+numeric_df = df.select_dtypes(include=['float64', 'int64'])
+sns.heatmap(numeric_df.corr(), annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
+plt.title("Correlation Heatmap (Feature Relationships)")
+plt.show()
 
-print("\nANOVA Dropoff Zone")
-print("F:", f_stat, "P:", p_val)
+# Independent T-Test (Yellow vs Green)
+yellow_tip = df[df['color'] == 'yellow']['tip']
+green_tip = df[df['color'] == 'green']['tip']
+t_stat, p_val_ttest = stats.ttest_ind(yellow_tip, green_tip)
 
-print("\nINSIGHTS:")
-print("✔ Tips differ by time (Lunch vs Dinner)")
-print("✔ Payment method affects tips")
-print("✔ Pickup borough & zones influence tip amounts")
-print("✔ ANOVA confirms location impact on tipping behavior")
+# One-Way ANOVA (By Borough)
+# Group data for ANOVA
+borough_groups = [group['tip'].values for name, group in df.groupby('pickup_borough')]
+f_stat, p_val_anova = stats.f_oneway(*borough_groups)
+
+print("\n--- STATISTICAL RESULTS ---")
+print(f"T-Test P-value: {p_val_ttest:.5f}")
+print(f"ANOVA P-value: {p_val_anova:.5f}")
+
+if p_val_ttest < 0.05:
+    print("Conclusion: There is a statistically significant difference in tips based on taxi color.")
